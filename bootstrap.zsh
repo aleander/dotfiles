@@ -10,7 +10,7 @@ dotfiles=("${(@f)$(find .dotfiles/dotfiles -type f | grep -v '.swp$')}")
 timestamp=$(date +%Y%m%d%H%M%S)
 
 for d in $dotdirs ; do
-	mkdir -p $d
+	mkdir -p ${d/.dotfiles\/dotfiles\//}
 done
 
 for f in $dotfiles ; do
