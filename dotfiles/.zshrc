@@ -25,10 +25,15 @@ export CLICOLOR=true
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 fpath=($HOME/.zsh/functions $fpath)
 
-# Use gnu ls
-alias ls='gls --color=auto'
-# And use dir colors
-eval $(gdircolors ~/.dir_colors)
+if [ $(uname) = 'Darwin' ] ; then
+	# Use gnu ls
+	alias ls='gls --color=auto'
+	# And use dir colors
+	eval $(gdircolors ~/.dir_colors)
+else
+	# Just parse the dir colors
+	eval $(dircolors ~/.dir_colros)
+fi
 
 # Autocorrection sucks
 unsetopt correct_all
@@ -52,10 +57,10 @@ setopt SHARE_HISTORY
 # First find it
 if [ -x "$(which go)" ] ; then 
 	export GOVERSION=$(go version | sed 's/^.*[^0-9]\(\([0-9]\{1,\}\.\)\{2\}[0-9]\)$/\1/')
-	export GOROOT=${$(basename $(which go))/\/bin/}
+	export GOROOT=${$(dirname $(which go))/\/bin/}
 	export GOPATH=~/.go:~/Documents/Projects/go
 	source $GOROOT/share/zsh/site-functions/_go
-}
+fi
 
 # Perl
 if [ -d ~/.perl5 ] ; then
