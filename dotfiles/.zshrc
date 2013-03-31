@@ -32,7 +32,7 @@ if [ $(uname) = 'Darwin' ] ; then
 	eval $(gdircolors ~/.dir_colors)
 else
 	# Just parse the dir colors
-	eval $(dircolors ~/.dir_colros)
+	eval $(dircolors ~/.dir_colors)
 	alias ls='ls --color=auto'
 fi
 
