@@ -16,3 +16,5 @@
 	autocrlf = input
 	excludesfile = ~/.gitignore
 	editor = vim
+[push]
+	default = simple
