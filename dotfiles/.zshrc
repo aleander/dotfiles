@@ -19,7 +19,7 @@ vcs_info_wrapper() {
     echo "%{$fg[grey]%}${vcs_info_msg_0_}%{$reset_color%}$del"
   fi
 }
-PROMPT="<%{$fg_no_bold[magenta]%}%*%{$reset_color%}> %{$fg_no_bold[green]%}%n%{$reset_color%}@%m:%{$fg_bold[blue]%}%~%{$reset_color%} (%h) %# %(?..%{$fg_bold[red]%}%?%{$reset_color%}) "
+PROMPT="<%{$fg_no_bold[magenta]%}%*%{$reset_color%}> %{$fg_no_bold[green]%}%n%{$reset_color%}@%m:%{$fg_bold[blue]%}%~%{$reset_color%} (%h) %# %(?..%{$fg_bold[red]%}%?%{$reset_color%} )"
 RPROMPT=$'$(vcs_info_wrapper)'
 export CLICOLOR=true
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
