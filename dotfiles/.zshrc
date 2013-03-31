@@ -49,7 +49,10 @@ zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
 # History
-setopt INC_APPEND_HISTORY
+export HISTFILE=~/.zshhistory
+export HISTSIZE=1000
+export SAVEHIST=1000
+setopt EXTENDED_HISTORY
 setopt SHARE_HISTORY
 
 # Stuff for languages
