@@ -47,4 +47,6 @@ Bundle 'tpope/vim-rbenv'
 
 " No, I don't have special plugins for the language I write the most in.
 " That's because perl is not bonkers insane or hell-bent on world destruction.
+" I will now add some packages, because life sucks.
+Bundle 'vim-perl/vim-perl'
 
