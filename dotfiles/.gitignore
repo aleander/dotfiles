@@ -1,0 +1,6 @@
+.DS_Store
+.rvmrc
+.rbenv-version
+.ruby-version
+.powenv
+*.swp
