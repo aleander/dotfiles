@@ -33,6 +33,7 @@ if [ $(uname) = 'Darwin' ] ; then
 else
 	# Just parse the dir colors
 	eval $(dircolors ~/.dir_colros)
+	alias ls='ls --color=auto'
 fi
 
 # Autocorrection sucks
