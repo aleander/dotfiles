@@ -78,6 +78,15 @@ if [ -d ~/.rbenv ] ; then
 	eval "$(rbenv init -)"
 fi
 
+# Python
+if [ -x "$(which python)" ] ; then
+	mypython = $(which python)
+	if [ -x ${$(dirname $(which python))/bin/share\/python/}virtualenvwrapper.sh -a -d $HOME/.venvs ] ; then
+		export WORKON_HOME=~/.venvs
+		source ${$(dirname $(which python))/bin/share\/python/}virtualenvwrapper.sh
+	fi
+fi
+
 # Set and cleanup paths
 export PATH="$HOME/.bin:${GOPATH//://bin:}/bin:$GOROOT/bin:$PATH"
 path=($^path(N))
