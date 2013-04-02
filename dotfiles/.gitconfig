@@ -18,3 +18,5 @@
 	editor = vim
 [push]
 	default = simple
+[include]
+	path = ~/.gitlocal
