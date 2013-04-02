@@ -2,6 +2,10 @@
 export PATH="/usr/local/bin:$PATH"
 export MANPATH="/usr/local/share/man:$MANPATH"
 
+if [ -f ~/.zsh/initial_setup ] ; then
+	source ~/.zsh/initial_setup
+fi
+
 # The pretty
 autoload colors && colors
 autoload -Uz vcs_info
@@ -14,10 +18,10 @@ zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
 zstyle ':vcs_info:*' enable git svn hg
 
 vcs_info_wrapper() {
-  vcs_info
-  if [ -n "$vcs_info_msg_0_" ]; then
-    echo "%{$fg[grey]%}${vcs_info_msg_0_}%{$reset_color%}$del"
-  fi
+	vcs_info
+	if [ -n "$vcs_info_msg_0_" ]; then
+		echo "%{$fg[grey]%}${vcs_info_msg_0_}%{$reset_color%}$del"
+	fi
 }
 PROMPT="<%{$fg_no_bold[magenta]%}%*%{$reset_color%}> %{$fg_no_bold[green]%}%n%{$reset_color%}@%m:%{$fg_bold[blue]%}%~%{$reset_color%} (%h) %# %(?..%{$fg_bold[red]%}%?%{$reset_color%} )"
 RPROMPT=$'$(vcs_info_wrapper)'
@@ -85,6 +89,10 @@ if [ -x "$(which python)" ] ; then
 		export WORKON_HOME=~/.venvs
 		source ${$(dirname $(which python))/bin/share\/python/}virtualenvwrapper.sh
 	fi
+fi
+
+if [ -f ~/.zsh/final_setup ] ; then
+	source ~/.zsh/final_setup
 fi
 
 # Set and cleanup paths
