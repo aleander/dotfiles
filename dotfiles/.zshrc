@@ -80,7 +80,7 @@ fi
 
 # Python
 if [ -x "$(which python)" ] ; then
-	mypython = $(which python)
+	mypython=$(which python)
 	if [ -x ${$(dirname $(which python))/bin/share\/python/}virtualenvwrapper.sh -a -d $HOME/.venvs ] ; then
 		export WORKON_HOME=~/.venvs
 		source ${$(dirname $(which python))/bin/share\/python/}virtualenvwrapper.sh
