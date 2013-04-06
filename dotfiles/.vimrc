@@ -34,6 +34,7 @@ set number
 " Misc stuff
 map <leader>n :setlocal number!<cr>
 map <leader>ft :set ft=
+nnoremap <silent> <leader><leader> :noh<return><esc>
 
 " CtrlP
 map <leader>pb :CtrlPBookmarkDir<cr>
@@ -48,3 +49,4 @@ map <Leader>ri :VimuxInspectRunner<CR>
 map <Leader>rx :VimuxClosePanes<CR>
 map <Leader>rq :VimuxCloseRunner<CR>
 map <Leader>rs :VimuxInterruptRunner<CR>
+
