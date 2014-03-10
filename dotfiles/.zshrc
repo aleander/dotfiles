@@ -1,6 +1,8 @@
 # Final components of paths, needed before we add things like perlbrew
 export PATH="/usr/local/bin:$PATH"
 export MANPATH="/usr/local/share/man:$MANPATH"
+export SSH_PROXY="int"
+alias extssh="SSH_PROXY=ext ssh"
 
 if [ -f ~/.zsh/initial_setup ] ; then
 	source ~/.zsh/initial_setup
@@ -64,10 +66,9 @@ setopt SHARE_HISTORY
 #
 # First find it
 if [ -x "$(which go)" ] ; then 
-	export GOVERSION=$(go version | sed 's/^.*[^0-9]\(\([0-9]\{1,\}\.\)\{2\}[0-9]\)$/\1/')
-	export GOROOT=${$(dirname $(which go))/\/bin/}
+	eval $(go env)
 	export GOPATH=~/.go:~/Documents/Projects/go
-	source $GOROOT/share/zsh/site-functions/_go
+	source /usr/local/share/zsh/site-functions/go
 fi
 
 # Perl

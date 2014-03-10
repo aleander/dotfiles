@@ -50,3 +50,5 @@ map <Leader>rx :VimuxClosePanes<CR>
 map <Leader>rq :VimuxCloseRunner<CR>
 map <Leader>rs :VimuxInterruptRunner<CR>
 
+" http://stackoverflow.com/questions/657447/vim-clear-last-search-highlighting
+nnoremap <Leader><esc> :noh<return><esc>
