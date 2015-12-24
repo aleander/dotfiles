@@ -21,18 +21,37 @@ endif
 
 silent! if plug#begin('~/.vim/plugged')
 
+" Edit
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-Plug 'junegunn/vim-emoji'
-Plug 'junegunn/vim-journal'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/vim-oblique'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'junegunn/vim-emoji'
+Plug 'junegunn/vim-journal'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
+
+" Utils
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-tbone'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'    }
+if v:version >= 703
+  Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
+endif
+Plug 'justinmk/vim-gtfo'
+
+
+" Colors
 Plug 'junegunn/seoul256.vim'
+Plug 'tomasr/molokai'
+Plug 'chriskempson/vim-tomorrow-theme'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -41,23 +60,16 @@ if v:version >= 703
   Plug 'mhinz/vim-signify'
 endif
 
-Plug 'benekastah/neomake'
-
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'    }
-if v:version >= 703
-  Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
-endif
-Plug 'justinmk/vim-gtfo'
-
-Plug 'altercation/vim-colors-solarized'
-
 " Languages
 Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'groenewege/vim-less'
+Plug 'pangloss/vim-javascript'
+Plug 'plasticboy/vim-markdown'
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 if s:darwin
   Plug 'rizzatti/dash.vim',  { 'on': 'Dash' }
 endif
+Plug 'benekastah/neomake'
 
 call plug#end()
 endif
@@ -255,6 +267,27 @@ endfunction
 command! Root call s:root()
 
 " ----------------------------------------------------------------------------
+" <F8> | Color scheme selector
+" ----------------------------------------------------------------------------
+function! s:rotate_colors()
+  if !exists('s:colors_list')
+    let s:colors_list =
+    \ sort(map(
+    \   filter(split(globpath(&rtp, "colors/*.vim"), "\n"), 'v:val !~ "^/usr/"'),
+    \   "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"))
+  endif
+  if !exists('s:colors_index')
+    let s:colors_index = index(s:colors_list, g:colors_name)
+  endif
+  let s:colors_index = (s:colors_index + 1) % len(s:colors_list)
+  let name = s:colors_list[s:colors_index]
+  execute 'colorscheme' name
+  redraw
+  echo name
+endfunction
+nnoremap <F8> :call <SID>rotate_colors()<cr>
+
+" ----------------------------------------------------------------------------
 " Syntax highlighting in code snippets
 " ----------------------------------------------------------------------------
 function! s:syntax_include(lang, b, e, inclusive)
@@ -352,10 +385,98 @@ xnoremap <leader>? "gy:call <SID>duck(@g)<cr>gv
 " ============================================================================
 
 " ----------------------------------------------------------------------------
+" vim-commentary
+" ----------------------------------------------------------------------------
+map  gc  <Plug>Commentary
+nmap gcc <Plug>CommentaryLine
+
+" ----------------------------------------------------------------------------
 " vim-fugitive
 " ----------------------------------------------------------------------------
 nmap     <Leader>g :Gstatus<CR>gg<c-n>
 nnoremap <Leader>d :Gdiff<CR>
+
+" ----------------------------------------------------------------------------
+" matchit.vim
+" ----------------------------------------------------------------------------
+runtime macros/matchit.vim
+
+" ----------------------------------------------------------------------------
+" ack.vim
+" ----------------------------------------------------------------------------
+if executable('ag')
+  let &grepprg = 'ag --nogroup --nocolor --column'
+else
+  let &grepprg = 'grep -rn $* *'
+endif
+command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
+
+" ----------------------------------------------------------------------------
+" <Enter> | vim-easy-align
+" ----------------------------------------------------------------------------
+let g:easy_align_delimiters = {
+\ '>': { 'pattern': '>>\|=>\|>' },
+\ '\': { 'pattern': '\\' },
+\ '/': { 'pattern': '//\+\|/\*\|\*/', 'delimiter_align': 'l', 'ignore_groups': ['!Comment'] },
+\ ']': {
+\     'pattern':       '\]\zs',
+\     'left_margin':   0,
+\     'right_margin':  1,
+\     'stick_to_left': 0
+\   },
+\ ')': {
+\     'pattern':       ')\zs',
+\     'left_margin':   0,
+\     'right_margin':  1,
+\     'stick_to_left': 0
+\   },
+\ 'f': {
+\     'pattern': ' \(\S\+(\)\@=',
+\     'left_margin': 0,
+\     'right_margin': 0
+\   },
+\ 'd': {
+\     'pattern': ' \ze\S\+\s*[;=]',
+\     'left_margin': 0,
+\     'right_margin': 0
+\   }
+\ }
+
+" Start interactive EasyAlign in visual mode
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign with a Vim movement
+nmap ga <Plug>(EasyAlign)
+nmap gaa ga_
+
+" xmap <Leader><Enter>   <Plug>(LiveEasyAlign)
+" nmap <Leader><Leader>a <Plug>(LiveEasyAlign)
+
+" inoremap <silent> => =><Esc>mzvip:EasyAlign/=>/<CR>`z$a<Space>
+
+" ----------------------------------------------------------------------------
+" <leader>t | vim-tbone
+" ----------------------------------------------------------------------------
+function! s:tmux_send(dest) range
+  call inputsave()
+  let dest = empty(a:dest) ? input('To which pane? ') : a:dest
+  call inputrestore()
+  silent call tbone#write_command(0, a:firstline, a:lastline, 1, dest)
+endfunction
+unlet! m
+for m in ['n', 'x']
+  let gv = m == 'x' ? 'gv' : ''
+  execute m."noremap <silent> <leader>tt :call <SID>tmux_send('')<cr>".gv
+  execute m."noremap <silent> <leader>th :call <SID>tmux_send('.left')<cr>".gv
+  execute m."noremap <silent> <leader>tj :call <SID>tmux_send('.bottom')<cr>".gv
+  execute m."noremap <silent> <leader>tk :call <SID>tmux_send('.top')<cr>".gv
+  execute m."noremap <silent> <leader>tl :call <SID>tmux_send('.right')<cr>".gv
+  execute m."noremap <silent> <leader>ty :call <SID>tmux_send('.top-left')<cr>".gv
+  execute m."noremap <silent> <leader>to :call <SID>tmux_send('.top-right')<cr>".gv
+  execute m."noremap <silent> <leader>tn :call <SID>tmux_send('.bottom-left')<cr>".gv
+  execute m."noremap <silent> <leader>t. :call <SID>tmux_send('.bottom-right')<cr>".gv
+endfor
+unlet m
 
 " ----------------------------------------------------------------------------
 " vim-signify
