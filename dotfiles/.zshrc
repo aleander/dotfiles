@@ -1,8 +1,6 @@
-# Final components of paths, needed before we add things like perlbrew
-export PATH="/usr/local/bin:$PATH"
+export PATH="${HOME}/bin:/usr/local/bin:$PATH:/usr/local/sbin"
 export MANPATH="/usr/local/share/man:$MANPATH"
-export SSH_PROXY="int"
-alias extssh="SSH_PROXY=ext ssh"
+
 
 if [ -f ~/.zsh/initial_setup ] ; then
 	source ~/.zsh/initial_setup
@@ -42,6 +40,14 @@ else
 	alias ls='ls --color=auto'
 fi
 
+
+# History
+export HISTFILE=~/.zshhistory
+export HISTSIZE=1000
+export SAVEHIST=1000
+setopt EXTENDED_HISTORY
+setopt SHARE_HISTORY
+
 # Autocorrection sucks
 unsetopt correct_all
 
@@ -54,50 +60,15 @@ zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
-# History
-export HISTFILE=~/.zshhistory
-export HISTSIZE=1000
-export SAVEHIST=1000
-setopt EXTENDED_HISTORY
-setopt SHARE_HISTORY
-
-# Stuff for languages
-# Go
-#
-# First find it
-if [ -x "$(which go)" ] ; then 
-	eval $(go env)
-	export GOPATH=~/.go:~/Documents/Projects/go
-	source /usr/local/share/zsh/site-functions/go
-fi
-
-# Perl
-if [ -d ~/.perl5 ] ; then
-	export PERLBREW_ROOT=~/.perl5/perlbrew
-	source ~/.perl5/perlbrew/etc/bashrc
-	source ~/.perl5/perlbrew/etc/perlbrew-completion.bash
-fi
-
-# Ruby
-if [ -d ~/.rbenv ] ; then
-	eval "$(rbenv init -)"
-fi
-
-# Python
-if [ -x "$(which python)" ] ; then
-	mypython=$(which python)
-	if [ -x ${$(dirname $(which python))/bin/share\/python/}virtualenvwrapper.sh -a -d $HOME/.venvs ] ; then
-		export WORKON_HOME=~/.venvs
-		source ${$(dirname $(which python))/bin/share\/python/}virtualenvwrapper.sh
-	fi
-fi
+unalias run-help
+autoload run-help
+HELPDIR=/usr/local/share/zsh/help
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+eval "$(pyenv virtualenv-init -)"
 
 if [ -f ~/.zsh/final_setup ] ; then
 	source ~/.zsh/final_setup
 fi
-
-# Set and cleanup paths
-export PATH="$HOME/.bin:${GOPATH//://bin:}/bin:$GOROOT/bin:$PATH"
 path=($^path(N))
 manpath=($^manpath(N))
 setopt EXTENDED_GLOB
@@ -106,4 +77,9 @@ manpath=(${${manpath//\/##/\/}%/})
 unsetopt EXTENDED_GLOB
 typeset -U path manpath
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+=======
+source /Users/modzero/.rvm/scripts/rvm
+
+alias vim=nvim
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
