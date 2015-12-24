@@ -22,9 +22,13 @@ for f in $dotfiles ; do
 	ln -sf "$HOME/$f" "$fn"
 done
 
-# Init vim. If there is no vim, I ain't playing that game
-if ! [ -d ~/.vim/bundle/vundle ] ; then
-	git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-fi
+# Setup neovim stuff
 
-vim -u ~/.vim/bundles.vim +BundleInstall +qa
+mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
+ln -s ~/.vim $XDG_CONFIG_HOME/nvim
+ln -s ~/.vimrc $XDG_CONFIG_HOME/nvim/init.vim
+
+# TPM
+
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+

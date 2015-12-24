@@ -1,54 +1,84 @@
-" Source Bundles stuff
-"
-source $HOME/.vim/bundles.vim
+let g:python_host_prog = '/usr/local/bin/python'
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
 
-" Go, the crap invented by Google with deadbeat package management
-set rtp +=$GOROOT/misc/vim
+call plug#begin()
+Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'junegunn/vim-emoji'
+Plug 'junegunn/vim-journal'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'gregsexton/gitv', { 'on': 'Gitv' }
+if v:version >= 703
+  Plug 'mhinz/vim-signify'
+endif
+
+Plug 'benekastah/neomake'
+
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'    }
+if v:version >= 703
+  Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
+endif
+Plug 'justinmk/vim-gtfo'
+
+Plug 'altercation/vim-colors-solarized'
+
+" Languages
+Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
+
+call plug#end()
 
 " Pseudoscientific rational universally applicable colorscheme
 " It's quite pleasant to me, but all the oh-so-optimal junk makes me feel
 " dirty
+if has('gui_running')
+    set background=light
+else
+    set background=dark
+endif
 let g:solarized_termtrans=1
 let g:solarized_termcolors=256
 colorscheme solarized
- 
-syntax on
-filetype plugin indent on
- 
+
 let mapleader = ","
 let localleader = "\\"
- 
+
 let bclose_multiple = 0
- 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_extensions = ['bookmarkdir', 'dir', 'buffertag', 'tag', 'line', 'mixed']
- 
+
 set laststatus=2
 set statusline=%F\ %m\ %{fugitive#statusline()}\ %y%=%l,%c\ %P
 set number
- 
+
 " Misc stuff
 map <leader>n :setlocal number!<cr>
 map <leader>ft :set ft=
-nnoremap <silent> <leader><leader> :noh<return><esc>
+nnoremap <silent> <leader><esc> :noh<return><esc>
 
-" CtrlP
-map <leader>pb :CtrlPBookmarkDir<cr>
-map <leader>pa :CtrlPBookmarkDirAdd 
-map <leader>bh :CtrlP /Users/aleander<cr>
-map <leader>bm :CtrlP /Users/aleander/Documents/Projects
+if has('nvim')
+  let $FZF_DEFAULT_OPTS .= ' --inline-info'
+endif
 
-" Vimux
-map <Leader>rp :VimuxPromptCommand<CR>
-map <Leader>rl :VimuxRunLastCommand<CR>
-map <Leader>ri :VimuxInspectRunner<CR>
-map <Leader>rx :VimuxClosePanes<CR>
-map <Leader>rq :VimuxCloseRunner<CR>
-map <Leader>rs :VimuxInterruptRunner<CR>
+nnoremap <silent> <leader><leader> :Files<cr>
+nnoremap <silent> <leader>C        :Colors<cr>
+nnoremap <silent> <leader><enter>  :Buffers<cr>
+nnoremap <silent> <leader>ag      :Ag <c-r><c-w><cr>
 
-" http://stackoverflow.com/questions/657447/vim-clear-last-search-highlighting
-nnoremap <Leader><esc> :noh<return><esc>
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
