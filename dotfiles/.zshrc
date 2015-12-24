@@ -105,3 +105,5 @@ path=(${${path//\/##/\/}%/})
 manpath=(${${manpath//\/##/\/}%/})
 unsetopt EXTENDED_GLOB
 typeset -U path manpath
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
