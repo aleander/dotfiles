@@ -1,6 +1,7 @@
 export PATH="${HOME}/bin:/usr/local/bin:$PATH:/usr/local/sbin"
 export MANPATH="/usr/local/share/man:$MANPATH"
-
+export LANG=en_US.utf-8
+export LC_CTYPE=en_US.utf-8
 
 if [ -f ~/.zsh/initial_setup ] ; then
 	source ~/.zsh/initial_setup
@@ -77,7 +78,6 @@ manpath=(${${manpath//\/##/\/}%/})
 unsetopt EXTENDED_GLOB
 typeset -U path manpath
 
-=======
 source /Users/modzero/.rvm/scripts/rvm
 
 alias vim=nvim

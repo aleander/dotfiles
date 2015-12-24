@@ -80,15 +80,50 @@ endif
 
 let mapleader = ","
 let localleader = "\\"
+
 set number
+set autoindent
+set smartindent
+set lazyredraw
 set laststatus=2
 set showcmd
+set visualbell
+set backspace=indent,eol,start
+set shortmess=aIT
+set hlsearch " CTRL-L / CTRL-R W
+set incsearch
+set hidden
+set ignorecase smartcase
+set wildmenu
+set wildmode=full
 set tabstop=2
 set shiftwidth=2
 set expandtab smarttab
+set scrolloff=5
+set encoding=utf-8
+set list
+set listchars=tab:\|:\,
+set virtualedit=block
+set nojoinspaces
+set diffopt=filler,vertical
+set autoread
+set clipboard=unnamed
 set foldlevelstart=99
+set grepformat=%f:%l:%c:%m,%f:%l:%m
+set completeopt=menuone,preview
+set nocursorline
+set nrformats=hex
+silent! set cryptmethod=blowfish2
 
-let bclose_multiple = 0
+set formatoptions+=1
+if has('patch-7.3.541')
+  set formatoptions+=j
+endif
+if has('patch-7.4.338')
+  let &showbreak = '↳ '
+  set breakindent
+  set breakindentopt=sbr
+endif
 
 " %< Where to truncate
 " %n buffer number
