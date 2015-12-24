@@ -26,6 +26,13 @@ Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-journal'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-pseudocl'
+Plug 'junegunn/vim-oblique'
+Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/seoul256.vim'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -68,18 +75,6 @@ set tabstop=2
 set shiftwidth=2
 set expandtab smarttab
 set foldlevelstart=99
-
-" Pseudoscientific rational universally applicable colorscheme
-" It's quite pleasant to me, but all the oh-so-optimal junk makes me feel
-" dirty
-if has('gui_running')
-    set background=light
-else
-    set background=dark
-endif
-let g:solarized_termtrans=1
-let g:solarized_termcolors=256
-colorscheme solarized
 
 let bclose_multiple = 0
 
@@ -187,6 +182,22 @@ endif
 set pastetoggle=<F9>
 set modelines=2
 set synmaxcol=1000
+
+" 80 chars/line
+set textwidth=0
+if exists('&colorcolumn')
+  set colorcolumn=80
+endif
+
+" Keep the cursor on the same column
+set nostartofline
+
+if has('gui_running')
+  set guifont=Monaco:h14 columns=80 lines=40
+  silent! colo seoul256-light
+else
+  silent! colo seoul256
+endif
 
 " }}}
 " ============================================================================
@@ -345,6 +356,55 @@ xnoremap <leader>? "gy:call <SID>duck(@g)<cr>gv
 " ----------------------------------------------------------------------------
 nmap     <Leader>g :Gstatus<CR>gg<c-n>
 nnoremap <Leader>d :Gdiff<CR>
+
+" ----------------------------------------------------------------------------
+" vim-emoji :dog: :cat: :rabbit:!
+" ----------------------------------------------------------------------------
+function! s:replace_emojis() range
+  for lnum in range(a:firstline, a:lastline)
+    let line = getline(lnum)
+    let subs = substitute(line,
+          \ ':\([^:]\+\):', '\=emoji#for(submatch(1), submatch(0))', 'g')
+    if line != subs
+      call setline(lnum, subs)
+    endif
+  endfor
+endfunction
+command! -range EmojiReplace <line1>,<line2>call s:replace_emojis()
+
+" ----------------------------------------------------------------------------
+" goyo.vim + limelight.vim
+" ----------------------------------------------------------------------------
+let g:limelight_paragraph_span = 1
+let g:limelight_priority = -1
+
+function! s:goyo_enter()
+  if has('gui_running')
+    set fullscreen
+    set background=light
+    set linespace=7
+  elseif exists('$TMUX')
+    silent !tmux set status off
+  endif
+  " hi NonText ctermfg=101
+  Limelight
+endfunction
+
+function! s:goyo_leave()
+  if has('gui_running')
+    set nofullscreen
+    set background=dark
+    set linespace=0
+  elseif exists('$TMUX')
+    silent !tmux set status on
+  endif
+  Limelight!
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+nnoremap <Leader>G :Goyo<CR>
 
 " }}}
 " ============================================================================
