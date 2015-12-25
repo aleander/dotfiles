@@ -19,16 +19,34 @@ for f in $dotfiles ; do
 		mkdir -p .dotfiles/backup-$timestamp/$(dirname $fn)
 		mv $fn .dotfiles/backup-$timestamp/$fn
 	fi
-	ln -sf "$HOME/$f" "$fn"
+  ln -sf "$HOME/$f" "$fn"
 done
 
-# Setup neovim stuff
 
 mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
-ln -s ~/.vim $XDG_CONFIG_HOME/nvim
-ln -s ~/.vimrc $XDG_CONFIG_HOME/nvim/init.vim
+
+if [ -f $XDG_CONFIG_HOME/modzero/dotfiles.sh ] then
+  source  $XDG_CONFIG_HOME/modzero/dotfiles.sh
+fi
+
+VIM_COMMAND=vim
+# Setup neovim stuff
+if [ "${USE_NVIM}" = "yes" ] then
+  ln -s ~/.vim $XDG_CONFIG_HOME/nvim
+  ln -s ~/.vimrc $XDG_CONFIG_HOME/nvim/init.vim
+  VIM_COMMAND=nvim
+fi
+
+if [ "${SKIP_VIMPLUG}" != "yes" ] then
+  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  $VIM_COMMAND +PlugInstall +qall
+fi
 
 # TPM
 
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+if [ -x $(which tmux) ] ; then
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  ~/.tmux/plugins/tpm/bin/install_plugins
+fi
 
