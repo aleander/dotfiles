@@ -23,7 +23,6 @@ silent! if plug#begin('~/.vim/plugged')
 
 " Edit
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/vim-oblique'
 Plug 'junegunn/vim-peekaboo'
@@ -46,6 +45,9 @@ if v:version >= 703
   Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
 endif
 Plug 'justinmk/vim-gtfo'
+if has('python')
+  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+endif
 
 " Colors
 Plug 'junegunn/seoul256.vim'
@@ -66,12 +68,14 @@ if v:version >= 703
   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
   Plug 'guns/vim-clojure-static'
   Plug 'guns/vim-clojure-highlight'
+  Plug 'guns/vim-slamhound'
 endif
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
 Plug 'plasticboy/vim-markdown'
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
+Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
 if s:darwin
   Plug 'rizzatti/dash.vim',  { 'on': 'Dash' }
 endif

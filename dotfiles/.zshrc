@@ -80,6 +80,15 @@ fi
 
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 eval "$(pyenv virtualenv-init -)"
+source /Users/modzero/.rvm/scripts/rvm
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -x $(which composer) ] && PATH="${HOME}/.composer/vendor/bin:${PATH}"
+
+export PATH="${HOME}/bin:${PATH}"
+
+if [ -x $(which nvim) ]; done
+alias vim=nvim
 
 if [ -f ~/.zsh/final_setup ] ; then
 	source ~/.zsh/final_setup
@@ -92,8 +101,5 @@ manpath=(${${manpath//\/##/\/}%/})
 unsetopt EXTENDED_GLOB
 typeset -U path manpath
 
-source /Users/modzero/.rvm/scripts/rvm
 
-alias vim=nvim
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
