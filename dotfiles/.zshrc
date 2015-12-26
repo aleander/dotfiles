@@ -89,8 +89,9 @@ fi
 
 export PATH="${HOME}/bin:${PATH}"
 
-if [ -x "$(which nvim)" ]; done
-alias vim=nvim
+if [ -x "$(which nvim)" ]; then
+  alias vim=nvim
+fi
 
 if [ -f ~/.zsh/final_setup ] ; then
 	source ~/.zsh/final_setup
