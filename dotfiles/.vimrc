@@ -47,7 +47,6 @@ if v:version >= 703
 endif
 Plug 'justinmk/vim-gtfo'
 
-
 " Colors
 Plug 'junegunn/seoul256.vim'
 Plug 'tomasr/molokai'
@@ -61,6 +60,13 @@ if v:version >= 703
 endif
 
 " Languages
+if v:version >= 703
+  Plug 'vim-ruby/vim-ruby'
+  Plug 'kovisoft/paredit',    { 'for': 'clojure' }
+  Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+  Plug 'guns/vim-clojure-static'
+  Plug 'guns/vim-clojure-highlight'
+endif
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'groenewege/vim-less'
 Plug 'pangloss/vim-javascript'
@@ -281,6 +287,29 @@ nnoremap [b :bprev<cr>
 " ----------------------------------------------------------------------------
 nnoremap <tab>   <c-w>w
 nnoremap <S-tab> <c-w>W
+
+" ----------------------------------------------------------------------------
+" Markdown headings
+" ----------------------------------------------------------------------------
+nnoremap <leader>1 m`yypVr=``
+nnoremap <leader>2 m`yypVr-``
+nnoremap <leader>3 m`^i### <esc>``4l
+nnoremap <leader>4 m`^i#### <esc>``5l
+nnoremap <leader>5 m`^i##### <esc>``6l
+
+" ----------------------------------------------------------------------------
+" Moving lines
+" ----------------------------------------------------------------------------
+nnoremap <silent> <C-k> :move-2<cr>
+nnoremap <silent> <C-j> :move+<cr>
+nnoremap <silent> <C-h> <<
+nnoremap <silent> <C-l> >>
+xnoremap <silent> <C-k> :move-2<cr>gv
+xnoremap <silent> <C-j> :move'>+<cr>gv
+xnoremap <silent> <C-h> <gv
+xnoremap <silent> <C-l> >gv
+xnoremap < <gv
+xnoremap > >gv
 
 " }}}
 " ============================================================================
@@ -567,6 +596,34 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 nnoremap <Leader>G :Goyo<CR>
+
+" ----------------------------------------------------------------------------
+" clojure
+" ----------------------------------------------------------------------------
+augroup lisp
+  autocmd!
+  autocmd FileType lisp,clojure,scheme RainbowParentheses
+  autocmd FileType lisp,clojure,scheme
+        \ nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign\ g/^\S/<cr>gv=
+  autocmd FileType lisp,clojure,scheme
+        \ nnoremap <buffer> <leader>a{ vi{<c-v>$:EasyAlign\ g/^\S/<cr>gv=
+  autocmd FileType lisp,clojure,scheme
+        \ nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign\ g/^\S/<cr>gv=
+  autocmd FileType lisp,clojure,scheme
+        \ nnoremap <buffer> <leader>rq :silent update<bar>Require!<cr>
+  autocmd FileType lisp,clojure,scheme
+        \ nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
+augroup END
+
+let g:clojure_maxlines = 30
+
+" let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+let g:paredit_smartjump = 1
+
+" ----------------------------------------------------------------------------
+" vim-markdown
+" ----------------------------------------------------------------------------
+let g:vim_markdown_initial_foldlevel = &foldlevelstart
 
 " }}}
 " ============================================================================
