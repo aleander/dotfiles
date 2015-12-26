@@ -78,16 +78,18 @@ if [ "$(whence run-help)" != "run-help" ] ; then
   HELPDIR=/usr/local/share/zsh/help
 fi
 
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-eval "$(pyenv virtualenv-init -)"
-source /Users/modzero/.rvm/scripts/rvm
+if which pyenv > /dev/null; then 
+  eval "$(pyenv init -)";
+  eval "$(pyenv virtualenv-init -)"
+fi
 
+[ -f ~/.rvm/scripts/rvm ]; && /Users/modzero/.rvm/scripts/rvm
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -x $(which composer) ] && PATH="${HOME}/.composer/vendor/bin:${PATH}"
+[ -x "$(which composer)" ] && PATH="${HOME}/.composer/vendor/bin:${PATH}"
 
 export PATH="${HOME}/bin:${PATH}"
 
-if [ -x $(which nvim) ]; done
+if [ -x "$(which nvim)" ]; done
 alias vim=nvim
 
 if [ -f ~/.zsh/final_setup ] ; then
