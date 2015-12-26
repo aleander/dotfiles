@@ -83,7 +83,7 @@ if which pyenv > /dev/null; then
   eval "$(pyenv virtualenv-init -)"
 fi
 
-[ -f ~/.rvm/scripts/rvm ]; && /Users/modzero/.rvm/scripts/rvm
+[ -f ~/.rvm/scripts/rvm ] && /Users/modzero/.rvm/scripts/rvm
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -x "$(which composer)" ] && PATH="${HOME}/.composer/vendor/bin:${PATH}"
 
