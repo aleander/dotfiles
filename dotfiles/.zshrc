@@ -29,7 +29,7 @@ typeset -a precmd_functions
 precmd_functions=()
 
 my_precmd() {
-  print -rP -- "-[%{$fg_no_bold[green]%}%n%{$reset_color%}@%m%{$fg_no_bold[yellow]%}:%{$fg_bold[blue]%}%~%{$reset_color%}]-"
+  print -rP -- "-[$fg_no_bold[green]%n$reset_color@%m$fg_no_bold[yellow]:$fg_bold[blue]%~$reset_color]-${PYENV_VERSION:+$fg_no_bold[magenta]($fg_no_bold[yellow]$PYENV_VERSION$fg_no_bold[magenta])$reset_color}"
 }
 
 precmd_functions+=my_precmd
@@ -80,6 +80,7 @@ fi
 
 if which pyenv > /dev/null; then 
   eval "$(pyenv init -)";
+  export PYENV_VIRTUALENV_DISABLE_PROMPT=1
   eval "$(pyenv virtualenv-init -)"
 fi
 
