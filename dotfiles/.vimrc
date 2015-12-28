@@ -169,6 +169,7 @@ silent! if emoji#available()
     \ 'perl':       'camel',
     \ 'python':     'snake',
     \ 'ruby':       'gem',
+    \ 'php':        'elephant',
     \ 'scala':      'barber',
     \ 'sh':         'shell',
     \ 'slim':       'dancer',
