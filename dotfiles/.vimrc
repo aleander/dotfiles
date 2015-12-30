@@ -27,8 +27,6 @@ Plug 'junegunn/vim-pseudocl'
 Plug 'junegunn/vim-oblique'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/rainbow_parentheses.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-journal'
 Plug 'tpope/vim-repeat'
@@ -40,7 +38,6 @@ Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-tbone'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'    }
 if v:version >= 703
   Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
 endif
@@ -48,6 +45,9 @@ Plug 'justinmk/vim-gtfo'
 if has('nvim') && has('python3')
   Plug 'Shougo/deoplete.nvim'
 endif
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'tpope/vim-vinegar'
 
 " Colors
 Plug 'junegunn/seoul256.vim'
@@ -269,10 +269,6 @@ endif
 
 map <leader>ft :set ft=
 nnoremap <silent> <leader><esc> :noh<return><esc>
-
-" <F10> | NERD Tree
-inoremap <F10> <esc>:NERDTreeToggle<cr>
-nnoremap <F10> :NERDTreeToggle<cr>
 
 " ----------------------------------------------------------------------------
 " Quickfix
