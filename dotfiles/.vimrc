@@ -45,8 +45,8 @@ if v:version >= 703
   Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
 endif
 Plug 'justinmk/vim-gtfo'
-if has('python')
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+if has('nvim') && has('python3')
+  Plug 'Shougo/deoplete.nvim'
 endif
 
 " Colors
@@ -80,6 +80,7 @@ if s:darwin
   Plug 'rizzatti/dash.vim',  { 'on': 'Dash' }
 endif
 Plug 'benekastah/neomake'
+Plug 'davidhalter/jedi-vim'
 
 call plug#end()
 endif
@@ -630,6 +631,20 @@ let g:paredit_smartjump = 1
 " ----------------------------------------------------------------------------
 let g:vim_markdown_initial_foldlevel = &foldlevelstart
 
+" ----------------------------------------------------------------------------
+"  deoplete.nvim
+" ----------------------------------------------------------------------------
+let g:deoplete#enable_at_startup = 1
+
+" ----------------------------------------------------------------------------
+"  jedi-vim
+" ----------------------------------------------------------------------------
+
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#show_call_signatures = 0
+
 " }}}
 " ============================================================================
 " FZF {{{
@@ -671,6 +686,7 @@ augroup vimrc
 
   " File types
   " au BufNewFile,BufRead *.icc               set filetype=cpp
+  au FileType python setlocal omnifunc=jedi#completions
 
   " Included syntax
   au FileType,ColorScheme * call <SID>file_type_handler()
