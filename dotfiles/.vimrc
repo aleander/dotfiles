@@ -48,6 +48,7 @@ endif
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'tpope/vim-vinegar'
+Plug 'benekastah/neomake'
 
 " Colors
 Plug 'junegunn/seoul256.vim'
