@@ -49,6 +49,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'tpope/vim-vinegar'
 Plug 'benekastah/neomake'
+Plug 'kannokanno/previm'
 
 " Colors
 Plug 'junegunn/seoul256.vim'
@@ -77,6 +78,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'plasticboy/vim-markdown'
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 Plug 'shawncplus/phpcomplete.vim', { 'for': 'php' }
+Plug 'xsbeats/vim-blade'
 if s:darwin
   Plug 'rizzatti/dash.vim',  { 'on': 'Dash' }
 endif
@@ -409,6 +411,8 @@ function! s:file_type_handler()
     setlocal completefunc=emoji#complete
   elseif &ft == 'sh'
     call s:syntax_include('ruby', '#!ruby', '/\%$', 1)
+  elseif &ft == 'php'
+    setlocal shiftwidth=4
   endif
 endfunction
 
@@ -641,6 +645,15 @@ let g:jedi#completions_enabled = 0
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#smart_auto_mappings = 0
 let g:jedi#show_call_signatures = 0
+
+" ----------------------------------------------------------------------------
+"  Previm
+" ----------------------------------------------------------------------------
+
+if s:darwin
+  let g:previm_open_cmd = 'open'
+endif
+nnoremap <leader>p :PrevimOpen<cr>
 
 " }}}
 " ============================================================================
