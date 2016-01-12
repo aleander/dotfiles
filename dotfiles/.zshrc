@@ -84,9 +84,14 @@ if which pyenv > /dev/null; then
   eval "$(pyenv virtualenv-init -)"
 fi
 
-[ -f ~/.rvm/scripts/rvm ] && /Users/modzero/.rvm/scripts/rvm
+if which pyenv > /dev/null && which brew > /dev/null ; then
+  # Stop pyenv from interfering with Homebrew
+  alias brew="env PATH=${PATH//$(pyenv root)\/shims:/} brew"
+fi
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -x "$(which composer)" ] && PATH="${HOME}/.composer/vendor/bin:${PATH}"
+[ -f ~/.rvm/scripts/rvm ] && /Users/modzero/.rvm/scripts/rvm
 
 export PATH="${HOME}/bin:${PATH}"
 
@@ -94,9 +99,6 @@ if [ -x "$(which nvim)" ]; then
   alias vim=nvim
 fi
 
-if [ -f ~/.zsh/final_setup ] ; then
-	source ~/.zsh/final_setup
-fi
 path=($^path(N))
 manpath=($^manpath(N))
 setopt EXTENDED_GLOB
@@ -105,5 +107,7 @@ manpath=(${${manpath//\/##/\/}%/})
 unsetopt EXTENDED_GLOB
 typeset -U path manpath
 
-
+if [ -f ~/.zsh/final_setup ] ; then
+	source ~/.zsh/final_setup
+fi
 
