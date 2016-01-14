@@ -50,6 +50,7 @@ Plug 'junegunn/limelight.vim'
 Plug 'tpope/vim-vinegar'
 Plug 'benekastah/neomake'
 Plug 'kannokanno/previm'
+Plug 'mhinz/vim-startify'
 
 " Colors
 Plug 'junegunn/seoul256.vim'
@@ -725,6 +726,7 @@ augroup vimrc
   endif
 augroup END
 
+" }}}
 " ============================================================================
 " LOCAL VIMRC {{{
 " ============================================================================
