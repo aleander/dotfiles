@@ -44,6 +44,8 @@ endif
 Plug 'justinmk/vim-gtfo'
 if has('nvim') && has('python3')
   Plug 'Shougo/deoplete.nvim'
+  Plug 'benekastah/neomake'
+  Plug 'zchee/deoplete-jedi'
 endif
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
@@ -51,6 +53,7 @@ Plug 'tpope/vim-vinegar'
 Plug 'benekastah/neomake'
 Plug 'kannokanno/previm'
 Plug 'mhinz/vim-startify'
+Plug 'ludovicchabant/vim-gutentags'
 
 " Colors
 Plug 'junegunn/seoul256.vim'
@@ -83,8 +86,6 @@ Plug 'xsbeats/vim-blade'
 if s:darwin
   Plug 'rizzatti/dash.vim',  { 'on': 'Dash' }
 endif
-Plug 'benekastah/neomake'
-Plug 'davidhalter/jedi-vim'
 
 call plug#end()
 endif
@@ -606,29 +607,6 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 nnoremap <Leader>G :Goyo<CR>
 
 " ----------------------------------------------------------------------------
-" clojure
-" ----------------------------------------------------------------------------
-augroup lisp
-  autocmd!
-  autocmd FileType lisp,clojure,scheme RainbowParentheses
-  autocmd FileType lisp,clojure,scheme
-        \ nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-  autocmd FileType lisp,clojure,scheme
-        \ nnoremap <buffer> <leader>a{ vi{<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-  autocmd FileType lisp,clojure,scheme
-        \ nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-  autocmd FileType lisp,clojure,scheme
-        \ nnoremap <buffer> <leader>rq :silent update<bar>Require!<cr>
-  autocmd FileType lisp,clojure,scheme
-        \ nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
-augroup END
-
-let g:clojure_maxlines = 30
-
-" let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
-let g:paredit_smartjump = 1
-
-" ----------------------------------------------------------------------------
 " vim-markdown
 " ----------------------------------------------------------------------------
 let g:vim_markdown_initial_foldlevel = &foldlevelstart
@@ -665,7 +643,7 @@ if has('nvim')
   let $FZF_DEFAULT_OPTS .= ' --inline-info'
 endif
 
-nnoremap <silent> <Leader><Leader> :Files<CR>
+nnoremap <silent> <Leader><Leader> :GitFiles<CR>
 nnoremap <silent> <Leader>C        :Colors<CR>
 nnoremap <silent> <Leader><Enter>  :Buffers<CR>
 nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>

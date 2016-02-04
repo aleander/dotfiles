@@ -7,6 +7,12 @@ if [ -f ~/.zsh/initial_setup ] ; then
 	source ~/.zsh/initial_setup
 fi
 
+setopt auto_pushd
+setopt pushd_to_home
+setopt pushd_ignore_dups
+
+setopt extended_glob
+
 # The pretty
 autoload colors && colors
 autoload -Uz vcs_info
