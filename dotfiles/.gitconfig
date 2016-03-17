@@ -14,9 +14,14 @@
 	token = 9127314b20b5314631dbd5e43a8c564c
 [core]
 	autocrlf = input
-	excludesfile = ~/.gitignore
-	editor = vim
+	excludesfile = /Users/modzero/.gitignore
 [push]
 	default = simple
 [include]
 	path = ~/.gitlocal
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

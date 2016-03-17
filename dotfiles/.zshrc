@@ -58,7 +58,6 @@ else
 	alias ls='ls --color=auto'
 fi
 
-
 # History
 export HISTFILE=~/.zshhistory
 export HISTSIZE=1000
@@ -93,6 +92,11 @@ fi
 if which pyenv > /dev/null && which brew > /dev/null ; then
   # Stop pyenv from interfering with Homebrew
   alias brew="env PATH=${PATH//$(pyenv root)\/shims:/} brew"
+  if [[ -x $(which reattach-to-user-namespace) ]]; then 
+	alias subl="env PATH=${PATH//$(pyenv root)\/shims:/} reattach-to-user-namespace subl"
+  else
+	alias subl="env PATH=${PATH//$(pyenv root)\/shims:/} subl"
+  fi
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
