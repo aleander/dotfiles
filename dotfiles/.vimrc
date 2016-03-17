@@ -54,6 +54,7 @@ Plug 'benekastah/neomake'
 Plug 'kannokanno/previm'
 Plug 'mhinz/vim-startify'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'mhinz/vim-sayonara'
 
 " Colors
 Plug 'junegunn/seoul256.vim'
@@ -633,6 +634,13 @@ if s:darwin
   let g:previm_open_cmd = 'open'
 endif
 nnoremap <leader>p :PrevimOpen<cr>
+
+" ----------------------------------------------------------------------------
+"  Sayonara
+" ----------------------------------------------------------------------------
+
+nnoremap <silent><leader>q  :Sayonara<cr>
+nnoremap <silent><leader>Q  :Sayonara!<cr>
 
 " }}}
 " ============================================================================
