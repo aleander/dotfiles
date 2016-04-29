@@ -1,1 +1,0 @@
-/Users/modzero/.vimrc

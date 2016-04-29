@@ -1,4 +1,4 @@
-export PATH="${HOME}/bin:/usr/local/bin:$PATH:/usr/local/sbin"
+export PATH="${HOME}/.bin:/usr/local/bin:$PATH:/usr/local/sbin"
 export MANPATH="/usr/local/share/man:$MANPATH"
 export LANG=en_US.utf-8
 export LC_CTYPE=en_US.utf-8
@@ -83,7 +83,7 @@ if [ "$(whence run-help)" != "run-help" ] ; then
   HELPDIR=/usr/local/share/zsh/help
 fi
 
-if which pyenv > /dev/null; then 
+if which pyenv > /dev/null; then
   eval "$(pyenv init -)";
   export PYENV_VIRTUALENV_DISABLE_PROMPT=1
   eval "$(pyenv virtualenv-init -)"
@@ -92,10 +92,8 @@ fi
 if which pyenv > /dev/null && which brew > /dev/null ; then
   # Stop pyenv from interfering with Homebrew
   alias brew="env PATH=${PATH//$(pyenv root)\/shims:/} brew"
-  if [[ -x $(which reattach-to-user-namespace) ]]; then 
-	alias subl="env PATH=${PATH//$(pyenv root)\/shims:/} reattach-to-user-namespace subl"
-  else
-	alias subl="env PATH=${PATH//$(pyenv root)\/shims:/} subl"
+  if [[ -x $(which reattach-to-user-namespace) ]]; then
+
   fi
 fi
 
@@ -103,11 +101,11 @@ fi
 [ -x "$(which composer)" ] && PATH="${HOME}/.composer/vendor/bin:${PATH}"
 [ -f ~/.rvm/scripts/rvm ] && /Users/modzero/.rvm/scripts/rvm
 
-export PATH="${HOME}/bin:${PATH}"
+[ -s "/Users/modzero/.dnx/dnvm/dnvm.sh" ] && . "/Users/modzero/.dnx/dnvm/dnvm.sh" # Load dnvm
 
-if [ -x "$(which nvim)" ]; then
-  alias vim=nvim
-fi
+export PATH="${HOME}/bin:${PATH}"
+export GOPATH="${HOME}/Documents/Gopath"
+export PATH="${GOPATH}/bin:/usr/local/opt/go/libexec/bin:${PATH}"
 
 path=($^path(N))
 manpath=($^manpath(N))
@@ -120,4 +118,3 @@ typeset -U path manpath
 if [ -f ~/.zsh/final_setup ] ; then
 	source ~/.zsh/final_setup
 fi
-
