@@ -25,19 +25,19 @@ done
 
 mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
 
-if [ -f $XDG_CONFIG_HOME/modzero/dotfiles.sh ] then
+if [ -f $XDG_CONFIG_HOME/modzero/dotfiles.sh ]; then
   source  $XDG_CONFIG_HOME/modzero/dotfiles.sh
 fi
 
 VIM_COMMAND=vim
 # Setup neovim stuff
-if [ "${USE_NVIM}" = "yes" ] then
+if [ "${USE_NVIM}" = "yes" ]; then
   ln -s ~/.vim $XDG_CONFIG_HOME/nvim
   ln -s ~/.vimrc $XDG_CONFIG_HOME/nvim/init.vim
   VIM_COMMAND=nvim
 fi
 
-if [ "${SKIP_VIMPLUG}" != "yes" ] then
+if [ "${SKIP_VIMPLUG}" != "yes" ]; then
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   $VIM_COMMAND +PlugInstall +qall

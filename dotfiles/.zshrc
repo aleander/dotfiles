@@ -99,7 +99,7 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -x "$(which composer)" ] && PATH="${HOME}/.composer/vendor/bin:${PATH}"
-[ -f ~/.rvm/scripts/rvm ] && /Users/modzero/.rvm/scripts/rvm
+[ -f ~/.rvm/scripts/rvm ] && ${HOME}/.rvm/scripts/rvm
 
 [ -s "/Users/modzero/.dnx/dnvm/dnvm.sh" ] && . "/Users/modzero/.dnx/dnvm/dnvm.sh" # Load dnvm
 
