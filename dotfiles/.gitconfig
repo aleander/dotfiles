@@ -14,7 +14,7 @@
 	token = 9127314b20b5314631dbd5e43a8c564c
 [core]
 	autocrlf = input
-	excludesfile = /Users/modzero/.gitignore
+	excludesfile = ~/.gitignore
 [push]
 	default = simple
 [include]
