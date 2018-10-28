@@ -85,27 +85,20 @@ fi
 
 if which pyenv > /dev/null; then
   eval "$(pyenv init -)";
-  export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-  eval "$(pyenv virtualenv-init -)"
 fi
 
 if which pyenv > /dev/null && which brew > /dev/null ; then
   # Stop pyenv from interfering with Homebrew
   alias brew="env PATH=${PATH//$(pyenv root)\/shims:/} brew"
   if [[ -x $(which reattach-to-user-namespace) ]]; then
-
+    alias brew="reattach-to-user-namespace brew"
   fi
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -x "$(which composer)" ] && PATH="${HOME}/.composer/vendor/bin:${PATH}"
 [ -f ~/.rvm/scripts/rvm ] && ${HOME}/.rvm/scripts/rvm
 
-[ -s "/Users/modzero/.dnx/dnvm/dnvm.sh" ] && . "/Users/modzero/.dnx/dnvm/dnvm.sh" # Load dnvm
-
 export PATH="${HOME}/bin:${PATH}"
-export GOPATH="${HOME}/Documents/Gopath"
-export PATH="${GOPATH}/bin:/usr/local/opt/go/libexec/bin:${PATH}"
 
 path=($^path(N))
 manpath=($^manpath(N))
